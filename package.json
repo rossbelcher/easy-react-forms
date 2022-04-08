@@ -1,0 +1,78 @@
+{
+  "name": "@rossbelcher/easy-react-forms",
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "module": "build/index.esm.js",
+  "homepage": "https://github.com/rossbelcher/easy-react-forms",
+  "files": [
+    "build"
+  ],
+  "types": "build/index.d.ts",
+  "description": "A React component library to make building forms easier.",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "generate": "node ./util/create-component",
+    "prepublishOnly": "npm run build",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "keywords": [
+    "React",
+    "Component",
+    "Library",
+    "Rollup",
+    "Typescript",
+    "Sass",
+    "Storybook"
+  ],
+  "author": "Inspiretec",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@babel/core": "latest",
+    "@rollup/plugin-commonjs": "latest",
+    "@rollup/plugin-node-resolve": "latest",
+    "@storybook/addon-actions": "^6.4.19",
+    "@storybook/addon-essentials": "^6.4.19",
+    "@storybook/addon-interactions": "^6.4.19",
+    "@storybook/addon-links": "^6.4.19",
+    "@storybook/react": "^6.4.19",
+    "@storybook/testing-library": "^0.0.9",
+    "@testing-library/jest-dom": "latest",
+    "@testing-library/react": "latest",
+    "@types/jest": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "babel-loader": "latest",
+    "babel-preset-react-app": "latest",
+    "gh-pages": "^3.2.3",
+    "identity-obj-proxy": "latest",
+    "jest": "latest",
+    "moment": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-pikaday-datepicker": "latest",
+    "rollup": "latest",
+    "rollup-plugin-copy": "latest",
+    "rollup-plugin-peer-deps-external": "latest",
+    "rollup-plugin-typescript2": "latest",
+    "ts-jest": "latest",
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "lodash": "latest",
+    "moment-timezone": "latest",
+    "react-dates": "^21.8.0",
+    "react-pikaday-component": "git://github.com/voronianski/react-pikaday-component#master",
+    "recoil": "latest",
+    "styled-components": "latest"
+  },
+  "resolutions": {
+    "styled-components": "^5"
+  }
+}
