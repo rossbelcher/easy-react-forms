@@ -23,6 +23,7 @@ interface TextAreaProps {
   minLength?: number;
   unlink?: boolean;
   testingId?: string;
+  className?: string;
 }
 
 const EasyTextArea = ({
@@ -40,6 +41,7 @@ const EasyTextArea = ({
   minLength,
   unlink,
   testingId,
+  className
 }: TextAreaProps) => {
   const context = useContext(FormContext);
   const uuid = useRef(createUUID());
@@ -88,7 +90,7 @@ const EasyTextArea = ({
   }
 
   return (
-    <>
+    <div className={className}>
       <FormAttibuteContext.Consumer>
         {attr => (
           <>
@@ -121,7 +123,7 @@ const EasyTextArea = ({
           </>
         )}
       </FormAttibuteContext.Consumer>
-    </>
+    </div>
   );
 };
 

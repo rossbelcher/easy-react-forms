@@ -16,6 +16,7 @@ interface TextInputProps {
     unlink?: boolean;
     placeholder?: string;
     calendarProps?: any;
+    className?: string;
 }
-declare const TestAirBnb: ({ model, onChange, inputName, value, maxDate, minDate, required, label, id, months, unlink, placeholder, calendarProps }: TextInputProps) => JSX.Element;
+declare const TestAirBnb: ({ model, onChange, inputName, value, maxDate, minDate, required, label, id, months, unlink, placeholder, className, calendarProps }: TextInputProps) => JSX.Element;
 export default TestAirBnb;

@@ -19,6 +19,7 @@ interface NumberInputProps {
     unlink?: boolean;
     validateOnLoad?: boolean;
     placeholder?: string;
+    className?: string;
 }
-declare const EasyNumberInput: ({ model, onChange, onBlur, onFocus, inputName, value, required, label, id, decimalPlaces, min, max, disabled, wholeNumbersOnly, testingId, defaultValue, unlink, validateOnLoad, placeholder, }: NumberInputProps) => JSX.Element;
+declare const EasyNumberInput: ({ model, onChange, onBlur, onFocus, inputName, value, required, label, id, decimalPlaces, min, max, disabled, wholeNumbersOnly, testingId, defaultValue, unlink, validateOnLoad, placeholder, className }: NumberInputProps) => JSX.Element;
 export default EasyNumberInput;

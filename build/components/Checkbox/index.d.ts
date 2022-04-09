@@ -10,6 +10,7 @@ interface CheckboxProps {
     labelClass?: string;
     disabled?: boolean;
     unlink?: boolean;
+    className?: string;
 }
-declare const EasyCheckbox: ({ model, onChange, inputName, checked, required, label, labelClass, id, disabled, unlink }: CheckboxProps) => JSX.Element;
+declare const EasyCheckbox: ({ model, onChange, inputName, checked, required, label, labelClass, id, disabled, unlink, className }: CheckboxProps) => JSX.Element;
 export default EasyCheckbox;

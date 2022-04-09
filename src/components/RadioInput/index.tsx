@@ -16,6 +16,7 @@ interface RadioProps {
     value: string;
     unlink?: boolean;
     inputName?: string;
+    className?: string;
 }
 
 const EasyRadioInput = ({
@@ -28,6 +29,7 @@ const EasyRadioInput = ({
     value,
     unlink,
     inputName,
+    className
 }: RadioProps) => {
     const context = useContext(FormContext);
     const uuid = useRef(createUUID());
@@ -62,7 +64,7 @@ const EasyRadioInput = ({
     }
 
     return (
-        <>
+        <div className={className}>
             <FormAttibuteContext.Consumer>
                 {attr => (
                     <>
@@ -88,7 +90,7 @@ const EasyRadioInput = ({
                     </>
                 )}
             </FormAttibuteContext.Consumer>
-        </>
+        </div>
     );
 };
 

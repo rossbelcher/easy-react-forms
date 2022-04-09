@@ -18,6 +18,7 @@ interface TextInputProps {
     alphanumeric?: boolean;
     validateOnLoad?: boolean;
     placeholder?: string;
+    className?: string;
 }
-declare const EasyTextInput: ({ model, onChange, onBlur, onFocus, inputName, value, required, label, id, min, max, disabled, testingId, defaultValue, unlink, alphanumeric, validateOnLoad, placeholder, }: TextInputProps) => JSX.Element;
+declare const EasyTextInput: ({ model, onChange, onBlur, onFocus, inputName, value, required, label, id, min, max, disabled, testingId, defaultValue, unlink, alphanumeric, validateOnLoad, placeholder, className }: TextInputProps) => JSX.Element;
 export default EasyTextInput;

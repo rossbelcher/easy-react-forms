@@ -17,6 +17,7 @@ interface TypeaheadProps {
     allowCustomValue?: boolean;
     openOnFocus?: boolean;
     testingId?: string;
+    className?: string;
 }
 export interface TypeaheadDataItem {
     value: string;

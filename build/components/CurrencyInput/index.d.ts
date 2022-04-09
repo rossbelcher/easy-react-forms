@@ -18,6 +18,7 @@ interface CurrencyInputProps {
     unlink?: boolean;
     validateOnLoad?: boolean;
     placeholder?: string;
+    className?: string;
 }
-declare const EasyCurrencyInput: ({ model, onChange, onBlur, onFocus, inputName, value, required, label, id, disabled, wholeNumbersOnly, testingId, defaultValue, unlink, validateOnLoad, placeholder, min, max, }: CurrencyInputProps) => JSX.Element;
+declare const EasyCurrencyInput: ({ model, onChange, onBlur, onFocus, inputName, value, required, label, id, disabled, wholeNumbersOnly, testingId, defaultValue, unlink, validateOnLoad, placeholder, min, max, className }: CurrencyInputProps) => JSX.Element;
 export default EasyCurrencyInput;

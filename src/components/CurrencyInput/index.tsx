@@ -29,6 +29,7 @@ interface CurrencyInputProps {
   unlink?: boolean;
   validateOnLoad?: boolean;
   placeholder?: string;
+  className?: string;
 }
 
 const DefaultNumericMax = 10000000000000000000;
@@ -53,6 +54,7 @@ const EasyCurrencyInput = ({
   placeholder,
   min,
   max = DefaultNumericMax,
+  className
 }: CurrencyInputProps) => {
   const context = useContext(FormContext);
   const uuid = useRef(createUUID());
@@ -188,7 +190,7 @@ const EasyCurrencyInput = ({
     return formatNumberToText(value, decimalPlaces);
   }
   return (
-    <>
+    <div className={className}>
       <FormAttibuteContext.Consumer>
         {attr => (
           <>
@@ -221,7 +223,7 @@ const EasyCurrencyInput = ({
           </>
         )}
       </FormAttibuteContext.Consumer>
-    </>
+    </div>
   );
 };
 

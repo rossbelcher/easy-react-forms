@@ -27,6 +27,7 @@ interface TextInputProps {
     alphanumeric?: boolean;
     validateOnLoad?: boolean;
     placeholder?: string;
+    className?: string;
 }
 
 const DefaultNumericMax = 10000000000000000000;
@@ -50,6 +51,7 @@ const EasyTextInput = ({
     alphanumeric,
     validateOnLoad,
     placeholder,
+    className
 }: TextInputProps) => {
     const context = useContext(FormContext);
     const uuid = useRef(createUUID());
@@ -84,11 +86,13 @@ const EasyTextInput = ({
     }, [])
 
     useEffect(() => {
-        setComponentState({ internalValue: value, error })
+        if (internalValue != value) {
+            setComponentState({ internalValue: value, error })
 
-        if (model && formId) {
-            const [valid, newError, focused] = validate(value)
-            setComponentData(value, valid);
+            if (model && formId) {
+                const [valid, newError, focused] = validate(value)
+                setComponentData(value, valid);
+            }
         }
     }, [value])
 
@@ -144,12 +148,12 @@ const EasyTextInput = ({
             return [false, error, focused];
         } else {
             if (!preventStateSet) setComponentState({ error: null, internalValue });
-            return [true, error, focused];
+            return [true, null, focused];
         }
     }
 
     return (
-        <>
+        <div className={className}>
             <FormAttibuteContext.Consumer>
                 {attr => (
                     <>
@@ -183,7 +187,7 @@ const EasyTextInput = ({
                     </>
                 )}
             </FormAttibuteContext.Consumer>
-        </>
+        </div>
     );
 };
 

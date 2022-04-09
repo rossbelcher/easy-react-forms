@@ -27,6 +27,7 @@ interface TypeaheadProps {
   allowCustomValue?: boolean;
   openOnFocus?: boolean;
   testingId?: string;
+  className?: string;
 }
 
 export interface TypeaheadDataItem {
@@ -109,6 +110,7 @@ const EasyTypeahead = (props: TypeaheadProps) => {
     allowCustomValue,
     openOnFocus,
     testingId,
+    className
   } = props;
   const context = useContext(FormContext);
   const uuid = useRef(createUUID());
@@ -326,8 +328,8 @@ const EasyTypeahead = (props: TypeaheadProps) => {
   }
 
   return (
-    <>
-    <FormAttibuteContext.Consumer>
+    <div className={className}>
+      <FormAttibuteContext.Consumer>
         {attr => (
           <div ref={typeaheadDom} style={{ width: '100%', position: 'relative' }}>
             {label &&
@@ -384,7 +386,7 @@ const EasyTypeahead = (props: TypeaheadProps) => {
           </div>
         )}
       </FormAttibuteContext.Consumer>
-    </>
+    </div>
   );
 };
 

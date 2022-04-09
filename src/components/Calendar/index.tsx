@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
-import { SingleDatePicker } from "react-dates";
+import DatePicker from 'react-dates/lib/components/SingleDatePicker';
 import moment from 'moment';
 import 'moment/locale/en-gb';
 import i18n from '../../utils/i18n';
@@ -28,6 +28,7 @@ interface TextInputProps {
   unlink?: boolean;
   placeholder?: string;
   calendarProps?: any;
+  className?: string;
 }
 
 const TestAirBnb = ({
@@ -43,6 +44,7 @@ const TestAirBnb = ({
   months,
   unlink,
   placeholder,
+  className,
   calendarProps = {
     showDefaultInputIcon: true
   }
@@ -138,7 +140,7 @@ const TestAirBnb = ({
   const parsedValue = valueToUse ? createMomentFromValue(valueToUse) : null;
 
   return (
-    <>
+    <div className={className}>
       <FormAttibuteContext.Consumer>
         {attr => (
           <BaseCalendarStyle error={error}>
@@ -148,7 +150,7 @@ const TestAirBnb = ({
               </BaseLabelStyle>
             }
 
-            <SingleDatePicker
+            <DatePicker
               focused={isFocused}
               date={parsedValue}
               className={error ? 'error' : ''}
@@ -172,7 +174,7 @@ const TestAirBnb = ({
           </BaseCalendarStyle>
         )}
       </FormAttibuteContext.Consumer>
-    </>
+    </div>
   );
 };
 

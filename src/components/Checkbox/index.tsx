@@ -18,6 +18,7 @@ interface CheckboxProps {
     labelClass?: string;
     disabled?: boolean;
     unlink?: boolean;
+    className?: string;
 }
 
 const EasyCheckbox = ({
@@ -30,7 +31,8 @@ const EasyCheckbox = ({
     labelClass,
     id,
     disabled,
-    unlink
+    unlink,
+    className
 }: CheckboxProps) => {
     const context = useContext(FormContext);
     const uuid = useRef(createUUID());
@@ -79,7 +81,7 @@ const EasyCheckbox = ({
         setComponentState({ isChecked: value, error })
     }
     return (
-        <>
+        <div className={className}>
             <FormAttibuteContext.Consumer>
                 {attr => (
                     <>
@@ -104,7 +106,7 @@ const EasyCheckbox = ({
                     </>
                 )}
             </FormAttibuteContext.Consumer>
-        </>
+        </div>
     );
 };
 

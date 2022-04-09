@@ -14,6 +14,7 @@ interface TextAreaProps {
     minLength?: number;
     unlink?: boolean;
     testingId?: string;
+    className?: string;
 }
-declare const EasyTextArea: ({ model, onChange, inputName, value, required, rows, label, id, placeholder, disabled, maxLength, minLength, unlink, testingId, }: TextAreaProps) => JSX.Element;
+declare const EasyTextArea: ({ model, onChange, inputName, value, required, rows, label, id, placeholder, disabled, maxLength, minLength, unlink, testingId, className }: TextAreaProps) => JSX.Element;
 export default EasyTextArea;

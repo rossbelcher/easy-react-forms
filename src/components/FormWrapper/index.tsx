@@ -43,7 +43,6 @@ export default class FormWrapper extends Component<ComponentProps, ComponentStat
   }
 
   valueChange = (formData) => {
-    debugger
     const data: any = formData ? formData : FormController.getFormData(this.props.formId ? this.props.formId : this.state.id);
 
     if (!data) return;
