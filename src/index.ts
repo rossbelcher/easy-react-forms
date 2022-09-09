@@ -5,7 +5,9 @@ import EasyCurrencyInput from "./components/CurrencyInput";
 import EasyNumberInput from "./components/NumberInput";
 import EasyRadioInput from "./components/RadioInput";
 import EasyTextarea from "./components/Textarea";
+import EasyDropdown from "./components/Dropdown";
 import EasyFormWrapper from "./components/FormWrapper";
+import EasyFormConsumer from "./controllers/easyFormConsumer";
 
 export { EasyTextInput };
 export { EasyCalendar };
@@ -14,4 +16,6 @@ export { EasyCurrencyInput };
 export { EasyNumberInput };
 export { EasyRadioInput };
 export { EasyTextarea };
+export { EasyDropdown };
 export { EasyFormWrapper };
+export { EasyFormConsumer };

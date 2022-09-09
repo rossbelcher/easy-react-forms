@@ -333,7 +333,7 @@ const EasyTypeahead = (props: TypeaheadProps) => {
         {attr => (
           <div ref={typeaheadDom} style={{ width: '100%', position: 'relative' }}>
             {label &&
-              <BaseLabelStyle required={required} htmlFor={id ? id : nameToUse}>
+              <BaseLabelStyle className={required ? 'required' : ''} htmlFor={id ? id : nameToUse}>
                 {label}
               </BaseLabelStyle>
             }

@@ -1,6 +1,6 @@
 {
   "name": "@rossbelcher/easy-react-forms",
-  "version": "1.0.5",
+  "version": "1.2.1",
   "main": "build/index.js",
   "module": "build/index.esm.js",
   "homepage": "https://github.com/rossbelcher/easy-react-forms",
@@ -28,24 +28,28 @@
     "Sass",
     "Storybook"
   ],
-  "author": "Inspiretec",
+  "author": "RossBelcher",
   "license": "MIT",
   "peerDependencies": {
-    "react": ">=16.8",
-    "react-dom": ">=16.8"
+    "react": ">=16.0.0 | >=17.0.0 ! >=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react-dom": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@babel/core": "latest",
     "@rollup/plugin-commonjs": "latest",
     "@rollup/plugin-node-resolve": "latest",
-    "@storybook/addon-actions": "^6.4.22",
-    "@storybook/addon-essentials": "^6.4.22",
-    "@storybook/addon-interactions": "^6.4.22",
-    "@storybook/addon-links": "^6.4.22",
-    "@storybook/react": "^6.4.22",
-    "@storybook/testing-library": "^0.0.9",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^12.1.5",
+    "@storybook/addon-actions": "latest",
+    "@storybook/addon-essentials": "latest",
+    "@storybook/addon-interactions": "latest",
+    "@storybook/addon-links": "latest",
+    "@storybook/react": "latest",
+    "@storybook/testing-library": "latest",
+    "@testing-library/jest-dom": "latest",
+    "@testing-library/react": "latest",
     "@types/jest": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
@@ -54,20 +58,21 @@
     "gh-pages": "^3.2.3",
     "identity-obj-proxy": "latest",
     "jest": "latest",
-    "moment": "latest",
-    "react": "^16.14.0",
-    "react-dates": "^21.8.0",
-    "react-dom": "^16.14.0",
+    "react": "latest",
+    "react-dom": "latest",
     "rollup": "latest",
     "rollup-plugin-copy": "latest",
     "rollup-plugin-peer-deps-external": "latest",
     "rollup-plugin-typescript2": "latest",
+    "stream-browserify": "^3.0.0",
     "ts-jest": "latest",
     "typescript": "latest"
   },
   "dependencies": {
     "lodash": "latest",
+    "moment": "latest",
     "moment-timezone": "latest",
+    "react-datepicker": "^4.8.0",
     "recoil": "latest",
     "styled-components": "latest"
   },

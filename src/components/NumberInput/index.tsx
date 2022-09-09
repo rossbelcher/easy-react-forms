@@ -64,12 +64,13 @@ const EasyNumberInput = ({
   const [componentState, setComponentState] = useRecoilState(FormControlState(formId || uuid.current, model || inputName));
   const setComponentData = useFormUpdate(formId, model);
   const inputRef = useRef();
+  const mounted = useRef<boolean>(false);
   const { error, internalValue } = componentState;
   const valueToUse = isNullOrWhitespace(internalValue) ? '' : internalValue;
 
   useEffect(() => {
     return () => {
-      setComponentData(value, true);
+      if (mounted.current) setComponentData(value, true);
     }
   }, [model])
 
@@ -89,30 +90,34 @@ const EasyNumberInput = ({
     setComponentState({ internalValue: newValue, error });
 
     if (validateOnLoad) validate(newValue);
+
+    mounted.current = true;
   }, [])
 
   useEffect(() => {
-    if (value == '-') {
-      setComponentState({
-        internalValue: value
-      })
-    } else if (!isNaN(value)) {
-      if (document.activeElement !== inputRef.current) {
-        setComponentState({ internalValue: formatDisplay(parseFloat(value)), error })
+    if (mounted.current) {
+      if (value == '-') {
+        setComponentState({
+          internalValue: value
+        })
+      } else if (!isNaN(value)) {
+        if (document.activeElement !== inputRef.current) {
+          setComponentState({ internalValue: formatDisplay(parseFloat(value)), error })
+        } else {
+          setComponentState({ internalValue: value, error })
+        }
+        if (model && formId) {
+          const [valid] = validate(value)
+          setComponentData(value, valid);
+        }
       } else {
         setComponentState({ internalValue: value, error })
       }
-      if (model && formId) {
-        const [valid] = validate(value)
-        setComponentData(value, valid);
-      }
-    } else {
-      setComponentState({ internalValue: value, error })
     }
   }, [value]);
 
   useEffect(() => {
-    if (!isNullOrWhitespace(internalValue)) {
+    if (mounted.current && !isNullOrWhitespace(internalValue)) {
       validate(internalValue)
     }
   }, [min, max])
@@ -160,22 +165,22 @@ const EasyNumberInput = ({
     let preventStateSet = passthrough || focused;
     if (!isValidValue(value) && required) {
       const error = i18n('The value entered must be numeric');
-      if (!preventStateSet) setComponentState({ error, internalValue });
+      if (!preventStateSet) setComponentState({ error, internalValue: value });
       return [false, error, focused];
     } else if (isNaN(Number(value))) {
       const error = i18n('The value entered must be numeric');
-      if (!preventStateSet) setComponentState({ error, internalValue });
+      if (!preventStateSet) setComponentState({ error, internalValue: value });
       return [false, error, focused];
     } else if ((min || min === 0) && Number(value) < min) {
       const error = i18n('The number entered must be greater than or equal to ') + String(min);
-      if (!preventStateSet) setComponentState({ error, internalValue });
+      if (!preventStateSet) setComponentState({ error, internalValue: value });
       return [false, error, focused];
     } else if ((max || max === 0) && Number(value) > max) {
       const error = i18n('The number entered must be less than or equal to ') + String(max);
-      if (!preventStateSet) setComponentState({ error, internalValue });
+      if (!preventStateSet) setComponentState({ error, internalValue: value });
       return [false, error, focused];
     } else {
-      if (!preventStateSet) setComponentState({ error: null, internalValue });
+      if (!preventStateSet) setComponentState({ error: null, internalValue: value });
       return [true, null, focused];
     }
   }

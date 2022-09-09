@@ -1,14 +1,9 @@
-import React, { useEffect } from 'react';
-import { atom, RecoilRoot, useRecoilState, useRecoilValue } from 'recoil';
+import React from 'react';
+import { atom, RecoilRoot } from 'recoil';
 
 interface ComponentProps {
-    children: React.ReactChild;
+    children: React.ReactNode;
 }
-
-export const FormControlData = atom<any>({
-  key: `formStateData`,
-  default: {}
-})
 
 export const FormControlState = (formId, model) => atom<any>({
   key: `${formId}--${model}`,
@@ -17,7 +12,9 @@ export const FormControlState = (formId, model) => atom<any>({
 
 const EasyFormConsumer = ({ children }: ComponentProps) => {
   return (
-    <RecoilRoot>{children}</RecoilRoot>
+    <RecoilRoot>
+      {children}
+    </RecoilRoot>
   );
 };
 

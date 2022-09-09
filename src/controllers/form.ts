@@ -49,8 +49,8 @@ export default class FormController {
     }, 50);
   }
   
-  static updateForm(id, data = null) {
-    if (this.formUpdate[id]) this.formUpdate[id](data[id]);
+  static updateForm(id) {
+    if (this.formUpdate[id]) this.formUpdate[id](window.formStateData[id]);
   }
 
   static getFormData(id: string) {

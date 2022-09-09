@@ -9,17 +9,20 @@ interface TextInputProps {
     required?: boolean;
     label?: string;
     id?: string;
-    min?: number;
-    max?: number;
     disabled?: boolean;
     testingId?: string;
     defaultValue?: any;
     unlink?: boolean;
-    alphanumeric?: boolean;
     validateOnLoad?: boolean;
     placeholder?: string;
     className?: string;
-    password?: boolean;
+    items?: DropdownItem[];
+    defaultText?: string;
+    addDefault?: boolean;
 }
-declare const EasyTextInput: ({ model, onChange, onBlur, onFocus, inputName, value, required, label, id, min, max, disabled, testingId, defaultValue, unlink, alphanumeric, validateOnLoad, placeholder, className, password }: TextInputProps) => JSX.Element;
+export interface DropdownItem {
+    value: string;
+    text?: string;
+}
+declare const EasyTextInput: ({ model, onChange, onBlur, onFocus, inputName, value, required, label, id, disabled, testingId, defaultValue, unlink, validateOnLoad, placeholder, className, items, defaultText, addDefault }: TextInputProps) => JSX.Element;
 export default EasyTextInput;

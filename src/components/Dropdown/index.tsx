@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { useRecoilState } from 'recoil';
-import { BaseErrorMessage, BaseInputStyle, BaseLabelStyle } from '../../baseStyles/input.styles';
+import { BaseErrorMessage, BaseInputStyle, BaseLabelStyle, BaseSelectStyle } from '../../baseStyles/input.styles';
 import { FormControlState } from '../../controllers/easyFormConsumer';
 import { useFormUpdate } from '../../hooks/formState';
 import { createUUID } from '../../utils/data-helpers';
@@ -18,20 +18,22 @@ interface TextInputProps {
     required?: boolean;
     label?: string;
     id?: string;
-    min?: number;
-    max?: number;
     disabled?: boolean;
     testingId?: string;
     defaultValue?: any;
     unlink?: boolean;
-    alphanumeric?: boolean;
     validateOnLoad?: boolean;
     placeholder?: string;
     className?: string;
-    password?: boolean;
+    items?: DropdownItem[];
+    defaultText?: string;
+    addDefault?: boolean;
 }
 
-const DefaultNumericMax = 10000000000000000000;
+export interface DropdownItem {
+    value: string;
+    text?: string;
+}
 
 const EasyTextInput = ({
     model,
@@ -43,17 +45,16 @@ const EasyTextInput = ({
     required,
     label,
     id,
-    min,
-    max = DefaultNumericMax,
     disabled,
     testingId,
     defaultValue,
     unlink,
-    alphanumeric,
     validateOnLoad,
     placeholder,
     className,
-    password
+    items,
+    defaultText,
+    addDefault = true
 }: TextInputProps) => {
     const context = useContext(FormContext);
     const uuid = useRef(createUUID());
@@ -61,7 +62,6 @@ const EasyTextInput = ({
     const nameToUse = inputName ? inputName : model;
     const [componentState, setComponentState] = useRecoilState(FormControlState(formId || uuid.current, model || inputName));
     const setComponentData = useFormUpdate(formId, model);
-    const inputRef = useRef();
     const mounted = useRef<boolean>(false);
     const { error, internalValue } = componentState;
     const valueToUse = isNullOrWhitespace(internalValue) ? '' : internalValue;
@@ -91,69 +91,46 @@ const EasyTextInput = ({
     }, [])
 
     useEffect(() => {
-        if (internalValue != value && mounted.current) {
+        if (!valueMatches(internalValue, value) && mounted.current) {
             setComponentState({ internalValue: value, error })
 
             if (model && formId) {
-                const [valid, newError, focused] = validate(value)
+                const [valid, newError] = validate(value)
                 setComponentData(value, valid);
             }
         }
     }, [value])
 
-    useEffect(() => {
-        if (mounted.current && !isNullOrWhitespace(internalValue)) {
-            validate(internalValue)
-        }
-    }, [min, max])
-
-    const isValid = (value) => {
-        return !!value;
+    const valueMatches = (val1: any, val2: any) => {
+        val1 = val1?.toString();
+        val2 = val2?.toString();
+        return val1?.toLowerCase() === val2?.toLowerCase();
     }
 
-    const setValue = (e: any, blur: boolean = false) => {
-        let value: any = e.target.value;
+    const isValid = (value) => {
+        return !(value == null || value == undefined || value == '');
+    }
 
-        const [valid, newError, focused] = validate(value);
+    const setValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        let value: string = e.target.value;
+
+        const [valid, newError] = validate(value);
 
         if (model && formId) setComponentData(value, valid);
 
         if (onChange) onChange(e, valid);
 
-        setComponentState({ internalValue: blur ? value : e.target.value, error: focused ? error : newError })
+        setComponentState({ internalValue: value, error: newError })
     }
 
-    const checkAlphanumeric = (e: any) => {
-        if (!alphanumeric) return;
-        const regex = new RegExp(/^[a-z0-9]+$/i);
-        const passesRegex = regex.test(e.target.value + e.key);
-        if (!passesRegex) return e.preventDefault();
-    }
-
-    const validate = (value, blur: boolean = false, passthrough = false): [boolean, string, boolean] => {
-        // Essentially we don't want the page jumping around when the user is typing
-        // This checks if our input is focused, if so clear errors until they finish typing
-        let focused = false;
-        if (document.activeElement === inputRef.current) {
-            focused = isNullOrWhitespace(error) && !blur;
-        }
-
-        let preventStateSet = passthrough || focused;
+    const validate = (value): [boolean, string] => {
         if (!isValid(value) && required) {
             let error = i18n('Required');
-            if (!preventStateSet) setComponentState({ error, internalValue: value });
-            return [false, error, focused];
-        } else if ((min || min === 0) && value.length < min) {
-            const error = i18n('The value entered must be greater than or equal to ') + String(min) + i18n(' characters');
-            if (!preventStateSet) setComponentState({ error, internalValue: value });
-            return [false, error, focused];
-        } else if ((max || max === 0) && value.length > max) {
-            const error = i18n('The value entered must be less than or equal to ') + String(max) + i18n(' characters');
-            if (!preventStateSet) setComponentState({ error, internalValue: value });
-            return [false, error, focused];
+            setComponentState({ error, internalValue: value });
+            return [false, error];
         } else {
-            if (!preventStateSet) setComponentState({ error: null, internalValue: value });
-            return [true, null, focused];
+            setComponentState({ error: null, internalValue: value });
+            return [true, null];
         }
     }
 
@@ -167,8 +144,7 @@ const EasyTextInput = ({
                                 {label}
                             </BaseLabelStyle>
                         }
-                        <BaseInputStyle
-                            type={password ? 'password' : 'text'}
+                        <BaseSelectStyle
                             className={error ? 'error' : ''}
                             name={nameToUse}
                             id={id ? id : nameToUse}
@@ -176,13 +152,19 @@ const EasyTextInput = ({
                             required={required}
                             disabled={disabled || attr.disabled}
                             data-e2e-id={testingId ? testingId : (id ? id : nameToUse)}
-                            ref={inputRef}
-                            autoComplete='off'
-                            onBlur={(e) => { setValue(e, true); if (onBlur) onBlur(e); }}
+                            onBlur={(e) => { setValue(e); if (onBlur) onBlur(e); }}
                             onFocus={(e) => onFocus ? onFocus(e) : null}
                             placeholder={placeholder}
-                            onKeyDown={(e) => checkAlphanumeric(e)}
-                            onChange={(e) => setValue(e)} />
+                            onChange={(e) => setValue(e)}>
+                            {addDefault &&
+                                <option value=''>{defaultText ? defaultText : 'Please Select'}</option>
+                            }
+                            {items && items.map((item, index) => {
+                                if (item.value !== null && item.value !== undefined) return (
+                                    <option key={`${item.value}-${index}`} value={item.value}>{item.text === undefined || item.text === null ? item.value : item.text}</option>
+                                )
+                            })}
+                        </BaseSelectStyle>
 
                         {error &&
                             <BaseErrorMessage className='error-message'>

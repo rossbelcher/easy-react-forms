@@ -9,3 +9,4 @@ export default {
 export const Basic = () => <RecoilRoot><EasyTextInput label="New text input" /></RecoilRoot>;
 export const Required = () => <RecoilRoot><EasyTextInput label="New text input" required /></RecoilRoot>;
 export const MinCharacters = () => <RecoilRoot><EasyTextInput label="New text input" min={3} /></RecoilRoot>;
+export const MinCharactersPassword = () => <RecoilRoot><EasyTextInput label="New password input" min={6} password /></RecoilRoot>;

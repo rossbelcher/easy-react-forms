@@ -20,24 +20,17 @@ export const BaseInputStyle = styled.input`
     ${base}
 `;
 
+export const BaseSelectStyle = styled.select`
+    ${base}
+`;
+
 export const BaseCalendarStyle= styled.div`
-    .DateInput_input {
-        padding: 0;
-        font-size: inherit;
-        width: 7em;
-
-        &:focus + .SingleDatePickerInput {
-            border-color: black;
-        }
+    input {
+        ${base}
     }
 
-    .SingleDatePickerInput_calendarIcon {
-        margin: 0 5px 0 5px;
-        padding: 5px;
-    }
-
-    .DateInput_input__focused {
-        border-bottom: none;
+    .react-datepicker__triangle {
+        transform: translate(20px, 0px) !important;
     }
 
 `;

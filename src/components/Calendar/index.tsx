@@ -1,7 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import "react-dates/initialize";
-import "react-dates/lib/css/_datepicker.css";
-import DatePicker from 'react-dates/lib/components/SingleDatePicker';
+import React, { useContext, useEffect, useRef } from 'react';
+import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'moment/locale/en-gb';
 import i18n from '../../utils/i18n';
@@ -13,8 +11,9 @@ import { createUUID } from '../../utils/data-helpers';
 import { FormAttibuteContext, FormContext } from '../FormWrapper';
 import { BaseCalendarStyle, BaseErrorMessage, BaseLabelStyle } from '../../baseStyles/input.styles';
 import { isNullOrWhitespace } from '../../utils/text-helpers';
+import { BaseThirdPartyCalendarStyle } from './EasyCalendarThirdParty.style';
 
-interface TextInputProps {
+interface ComponentProps {
   model?: string;
   onChange?: Function;
   inputName?: string;
@@ -31,7 +30,7 @@ interface TextInputProps {
   className?: string;
 }
 
-const TestAirBnb = ({
+const EasyCalendar = ({
   model,
   onChange,
   inputName,
@@ -45,10 +44,8 @@ const TestAirBnb = ({
   unlink,
   placeholder,
   className,
-  calendarProps = {
-    showDefaultInputIcon: true
-  }
-}: TextInputProps) => {
+  calendarProps = {}
+}: ComponentProps) => {
   const context = useContext(FormContext);
   const uuid = useRef(createUUID());
   const formId = unlink || !context ? null : context;
@@ -58,7 +55,6 @@ const TestAirBnb = ({
   const { error, internalValue } = componentState;
   const valueToUse = value || internalValue;
   const hasLoaded = useRef<boolean>(false);
-  const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     if (model) {
@@ -80,7 +76,7 @@ const TestAirBnb = ({
   }, [value, minDate, maxDate])
 
   const setValue = (newDate) => {
-    const value = newDate ? newDate.utcOffset("+00:00", true) : undefined;
+    const value = newDate ? createMomentFromValue(newDate).utcOffset("+00:00", true) : undefined;
     const [valid, newError] = validate(false, value);
     if (model && formId) {
       setComponentData(value, valid);
@@ -131,16 +127,13 @@ const TestAirBnb = ({
     return false;
   }
 
-  const onFocusChange = ({ focused }) => {
-    setIsFocused(focused);
-  }
-
   const parsedMinDate = isNullOrWhitespace(minDate) ? null : toDate(minDate);
   const parsedMaxDate = isNullOrWhitespace(maxDate) ? null : toDate(maxDate);
   const parsedValue = valueToUse ? createMomentFromValue(valueToUse) : null;
 
   return (
     <div className={className}>
+      <BaseThirdPartyCalendarStyle />
       <FormAttibuteContext.Consumer>
         {attr => (
           <BaseCalendarStyle error={error}>
@@ -151,15 +144,13 @@ const TestAirBnb = ({
             }
 
             <DatePicker
-              focused={isFocused}
-              date={parsedValue}
+              selected={parsedValue?.toDate()}
               className={error ? 'error' : ''}
-              onDateChange={setValue}
+              onChange={setValue}
               onClose={setValue}
-              displayFormat={DEFAULT_DATE_FORMAT}
-              onFocusChange={onFocusChange}
+              dateFormat={'dd/MM/yyyy'}
               disabled={attr.disabled}
-              numberOfMonths={months ? months : 2}
+              monthsShown={months ? months : 2}
               minDate={parsedMinDate}
               maxDate={parsedMaxDate}
               placeholder={placeholder}
@@ -178,5 +169,5 @@ const TestAirBnb = ({
   );
 };
 
-export default TestAirBnb;
+export default EasyCalendar;
 
